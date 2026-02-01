@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+	<head lang="en">
+		<title>MuteDeck Settings</title>
+		<meta charset="utf-8" />
+		<script src="js/sdpi-components.js"></script>
+		<script src="js/functions.js"></script>
+		<link rel="stylesheet" href="css/mutedeck.css" />
+	</head>
+
+	<body>
+		<sdpi-item label="Other Action">
+			<sdpi-select
+				id="custom_action_select"
+				setting="custom_action_name"
+				placeholder="Please choose an action"
+				datasource="getCustomActions"
+				loading="Fetching actions from MuteDeck.."
+			>
+			</sdpi-select>
+		</sdpi-item>
+
+		<sdpi-item id="app_types_container" class="app-types-container" style="display: none">
+			<div class="app-types-label">Works with:</div>
+			<div id="app_types_list" class="app-types-list"></div>
+		</sdpi-item>
+
+		<sdpi-item label="Label">
+			<sdpi-checkbox setting="show_label" label="Show label with status" default="true"></sdpi-checkbox>
+		</sdpi-item>
+
+		<sdpi-item>
+			<div class="divider-container">
+				<hr class="divider" />
+				<span class="divider-text">Info</span>
+				<hr class="divider" />
+			</div>
+			<p class="mutedeck" style="color: #ffffff">
+				Trigger any action beyond the built-in controls. Use keyboard shortcuts to automate app features, macros, or
+				anything else MuteDeck can control.
+			</p>
+			<p class="mutedeck" style="color: #ffffff">
+				Learn how to
+				<a href="#" data-open-url="https://mutedeck.com/go/create-custom-actions">create actions here</a>.
+			</p>
+			<p class="mutedeck" id="mutedeck_connection_status" style="color: #ffffff"></p>
+		</sdpi-item>
+
+		<script>
+			makeLinksClickable();
+
+			// App type display names
+			const appTypeNames = {
+				zoom: "Zoom",
+				teams: "Teams",
+				"google-meet": "Google Meet",
+				discord: "Discord",
+				webex: "Webex",
+				"active-application": "Active App",
+			};
+
+			// Store action data and current selection
+			let customActionsData = [];
+			let selectedActionName = null;
+
+			// Listen for action data from the plugin
+			SDPIComponents.streamDeckClient.sendToPropertyInspector.subscribe((data) => {
+				if (data?.payload?.event === "customActionsData") {
+					customActionsData = data.payload.actions || [];
+					updateAppTypesDisplay();
+				}
+			});
+
+			// Get initial value from settings
+			const [getActionName] = SDPIComponents.useSettings("custom_action_name", (value) => {
+				selectedActionName = value;
+				updateAppTypesDisplay();
+			});
+
+			getActionName().then((value) => {
+				if (value) {
+					selectedActionName = value;
+					updateAppTypesDisplay();
+				}
+			});
+
+			// Listen for valuechange event on the sdpi-select element
+			const selectElement = document.getElementById("custom_action_select");
+			if (selectElement) {
+				selectElement.addEventListener("valuechange", () => {
+					// The component's value property contains the new selection
+					selectedActionName = selectElement.value;
+					updateAppTypesDisplay();
+				});
+			}
+
+			function updateAppTypesDisplay() {
+				const container = document.getElementById("app_types_container");
+				const list = document.getElementById("app_types_list");
+
+				if (!selectedActionName || customActionsData.length === 0) {
+					container.style.display = "none";
+					return;
+				}
+
+				// Find the selected action's data
+				const selectedAction = customActionsData.find((a) => a.name === selectedActionName);
+				const appTypes = selectedAction?.app_types || [];
+
+				if (appTypes.length === 0) {
+					container.style.display = "none";
+					return;
+				}
+
+				// Build badges HTML
+				list.innerHTML = appTypes
+					.map((appType) => {
+						const displayName = appTypeNames[appType] || appType;
+						return `<span class="app-badge ${appType}">${displayName}</span>`;
+					})
+					.join("");
+
+				container.style.display = "block";
+			}
+		</script>
+	</body>
+</html>

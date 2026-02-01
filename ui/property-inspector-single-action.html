@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+	<head lang="en">
+		<title>MuteDeck Settings</title>
+		<meta charset="utf-8" />
+		<script src="js/sdpi-components.js"></script>
+		<script src="js/functions.js"></script>
+		<link rel="stylesheet" href="css/mutedeck.css" />
+	</head>
+
+	<body>
+		<sdpi-item label="Label">
+			<sdpi-checkbox setting="show_label" label="Show label with status on button" default="true"></sdpi-checkbox>
+		</sdpi-item>
+
+		<sdpi-item>
+			<div class="divider-container">
+				<hr class="divider" />
+				<span class="divider-text">Info</span>
+				<hr class="divider" />
+			</div>
+
+			<p class="mutedeck" id="mutedeck_connection_status" style="color: #ffffff"></p>
+		</sdpi-item>
+	</body>
+</html>

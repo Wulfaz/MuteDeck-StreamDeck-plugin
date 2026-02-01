@@ -1,0 +1,310 @@
+{
+    "Name": "MuteDeck",
+    "UUID": "com.mutedeck.plugin",
+    "Version": "12.0.0.0",
+    "Author": "MuteDeck",
+    "Category": "MuteDeck",
+    "CategoryIcon": "imgs/plugin/category",
+    "CodePath": "bin/plugin.js",
+    "Description": "Take control of your meetings and streams with MuteDeck. Check and control your status on Zoom, Teams, Webex, Google Meet, StreamYard, Riverside.fm, Discord, and other apps. Quickly mute or unmute, toggle your webcam, start sharing, leave the meeting, and more! You can even define custom actions.<br /><br />MuteDeck runs on Windows, macOS, and detects the status of conference call software. However! If MuteDeck does not recognize your conference call software, it controls the system mute. That means you can use it for any and all types of software!<br /><br />After installing this plugin, get the MuteDeck application from the MuteDeck homepage.",
+    "Icon": "imgs/plugin/marketplace",
+    "PropertyInspectorPath": "ui/property-inspector.html",
+    "Actions": [
+        {
+            "Name": "Mute",
+            "UUID": "com.mutedeck.plugin.togglemute",
+            "Icon": "imgs/actions/togglemute/unmuted",
+            "Tooltip": "Toggles the conf call mute, or system mute",
+            "Controllers": [
+                "Keypad"
+            ],
+            "DisableAutomaticStates": true,
+            "States": [
+                {
+                    "Image": "imgs/actions/togglemute/unmuted",
+                    "Name": "Unmuted"
+                },
+                {
+                    "Image": "imgs/actions/togglemute/muted",
+                    "Name": "Muted"
+                },
+                {
+                    "Image": "imgs/actions/togglemute/microphone-disabled"
+                }
+            ]
+        },
+        {
+            "Name": "Video / Camera",
+            "UUID": "com.mutedeck.plugin.togglevideo",
+            "Icon": "imgs/actions/togglevideo/video-started",
+            "Tooltip": "Toggles your camera on and off",
+            "Controllers": [
+                "Keypad"
+            ],
+            "DisableAutomaticStates": true,
+            "States": [
+                {
+                    "Image": "imgs/actions/togglevideo/video-started"
+                },
+                {
+                    "Image": "imgs/actions/togglevideo/video-stopped"
+                },
+                {
+                    "Image": "imgs/actions/togglevideo/video-disabled"
+                }
+            ]
+        },
+        {
+            "Name": "Share",
+            "UUID": "com.mutedeck.plugin.togglesharing",
+            "Icon": "imgs/actions/togglesharing/sharing-stopped",
+            "Tooltip": "Toggles sharing your desktop or apps",
+            "Controllers": [
+                "Keypad"
+            ],
+            "DisableAutomaticStates": true,
+            "States": [
+                {
+                    "Image": "imgs/actions/togglesharing/sharing-started"
+                },
+                {
+                    "Image": "imgs/actions/togglesharing/sharing-stopped"
+                },
+                {
+                    "Image": "imgs/actions/togglesharing/sharing-disabled"
+                }
+            ]
+        },
+        {
+            "Name": "Record",
+            "UUID": "com.mutedeck.plugin.togglerecording",
+            "Icon": "imgs/actions/togglerecording/recording-stopped",
+            "Tooltip": "Toggles the recording of your call",
+            "Controllers": [
+                "Keypad"
+            ],
+            "DisableAutomaticStates": true,
+            "States": [
+                {
+                    "Image": "imgs/actions/togglerecording/recording-started"
+                },
+                {
+                    "Image": "imgs/actions/togglerecording/recording-stopped"
+                },
+                {
+                    "Image": "imgs/actions/togglerecording/recording-disabled"
+                }
+            ]
+        },
+        {
+            "Name": "Leave Meeting",
+            "UUID": "com.mutedeck.plugin.leavemeeting",
+            "Icon": "imgs/actions/leavemeeting/leave-meeting",
+            "Tooltip": "Leaves the meeting you're in",
+            "PropertyInspectorPath": "ui/property-inspector-single-action.html",
+            "Controllers": [
+                "Keypad"
+            ],
+            "DisableAutomaticStates": true,
+            "States": [
+                {
+                    "Image": "imgs/actions/leavemeeting/leave-meeting"
+                },
+                {
+                    "Image": "imgs/actions/leavemeeting/leave-meeting-disabled"
+                }
+            ]
+        },
+        {
+            "Name": "Bring to Front",
+            "UUID": "com.mutedeck.plugin.bring-to-front",
+            "Icon": "imgs/actions/bring-to-front/bring-to-front",
+            "Tooltip": "Brings active call app to the front of your other apps",
+            "PropertyInspectorPath": "ui/property-inspector-single-action.html",
+            "Controllers": [
+                "Keypad"
+            ],
+            "DisableAutomaticStates": true,
+            "States": [
+                {
+                    "Image": "imgs/actions/bring-to-front/bring-to-front"
+                },
+                {
+                    "Image": "imgs/actions/bring-to-front/bring-to-front-disabled"
+                }
+            ]
+        },
+        {
+            "Name": "Other Actions",
+            "UUID": "com.mutedeck.plugin.custom-action",
+            "Icon": "imgs/actions/custom-action/custom-action",
+            "Tooltip": "Trigger any action beyond the built-in controls. Use keyboard shortcuts to automate app features, macros, or anything else MuteDeck can control.",
+            "PropertyInspectorPath": "ui/property-inspector-custom-action.html",
+            "Controllers": [
+                "Keypad"
+            ],
+            "States": [
+                {
+                    "Image": "imgs/actions/custom-action/custom-action"
+                }
+            ]
+        },
+        {
+            "Name": "Teams: Background Blur",
+            "UUID": "com.mutedeck.plugin.teams-backgroundblur",
+            "Icon": "imgs/actions/teams-backgroundblur/background-blur",
+            "Tooltip": "Toggles background blur. Teams only.",
+            "PropertyInspectorPath": "ui/property-inspector-single-action.html",
+            "Controllers": [
+                "Keypad"
+            ],
+            "DisableAutomaticStates": true,
+            "VisibleInActionsList": false,
+            "States": [
+                {
+                    "Image": "imgs/actions/teams-backgroundblur/background-blur"
+                },
+                {
+                    "Image": "imgs/actions/teams-backgroundblur/background-blur-disabled"
+                }
+            ]
+        },
+        {
+            "Name": "Teams: Raise Hand",
+            "UUID": "com.mutedeck.plugin.teams-raisehand",
+            "Icon": "imgs/actions/teams-raisehand/raise-hand",
+            "Tooltip": "Raises Hand. Teams only.",
+            "PropertyInspectorPath": "ui/property-inspector-single-action.html",
+            "Controllers": [
+                "Keypad"
+            ],
+            "DisableAutomaticStates": true,
+            "VisibleInActionsList": false,
+            "States": [
+                {
+                    "Image": "imgs/actions/teams-raisehand/raise-hand"
+                },
+                {
+                    "Image": "imgs/actions/teams-raisehand/raise-hand-disabled"
+                }
+            ]
+        },
+        {
+            "Name": "Teams: Applause Reaction",
+            "UUID": "com.mutedeck.plugin.teams-react-applause",
+            "Icon": "imgs/actions/teams-react-applause/react-applause",
+            "Tooltip": "Reacts with an applause. Teams only.",
+            "PropertyInspectorPath": "ui/property-inspector-single-action.html",
+            "Controllers": [
+                "Keypad"
+            ],
+            "DisableAutomaticStates": true,
+            "VisibleInActionsList": false,
+            "States": [
+                {
+                    "Image": "imgs/actions/teams-react-applause/react-applause"
+                },
+                {
+                    "Image": "imgs/actions/teams-react-applause/react-applause-disabled"
+                }
+            ]
+        },
+        {
+            "Name": "Teams: Laugh Reaction",
+            "UUID": "com.mutedeck.plugin.teams-react-laugh",
+            "Icon": "imgs/actions/teams-react-laugh/react-laugh",
+            "Tooltip": "Reacts with a laugh. Teams only.",
+            "PropertyInspectorPath": "ui/property-inspector-single-action.html",
+            "Controllers": [
+                "Keypad"
+            ],
+            "DisableAutomaticStates": true,
+            "VisibleInActionsList": false,
+            "States": [
+                {
+                    "Image": "imgs/actions/teams-react-laugh/react-laugh"
+                },
+                {
+                    "Image": "imgs/actions/teams-react-laugh/react-laugh-disabled"
+                }
+            ]
+        },
+        {
+            "Name": "Teams: Like Reaction",
+            "UUID": "com.mutedeck.plugin.teams-react-like",
+            "Icon": "imgs/actions/teams-react-like/react-like",
+            "Tooltip": "Reacts with a like. Teams only.",
+            "PropertyInspectorPath": "ui/property-inspector-single-action.html",
+            "Controllers": [
+                "Keypad"
+            ],
+            "DisableAutomaticStates": true,
+            "VisibleInActionsList": false,
+            "States": [
+                {
+                    "Image": "imgs/actions/teams-react-like/react-like"
+                },
+                {
+                    "Image": "imgs/actions/teams-react-like/react-like-disabled"
+                }
+            ]
+        },
+        {
+            "Name": "Teams: Heart Reaction",
+            "UUID": "com.mutedeck.plugin.teams-react-love",
+            "Icon": "imgs/actions/teams-react-love/react-love",
+            "Tooltip": "Reacts with a heart. Teams only.",
+            "PropertyInspectorPath": "ui/property-inspector-single-action.html",
+            "Controllers": [
+                "Keypad"
+            ],
+            "DisableAutomaticStates": true,
+            "VisibleInActionsList": false,
+            "States": [
+                {
+                    "Image": "imgs/actions/teams-react-love/react-love"
+                },
+                {
+                    "Image": "imgs/actions/teams-react-love/react-love-disabled"
+                }
+            ]
+        },
+        {
+            "Name": "Teams: Wow Reaction",
+            "UUID": "com.mutedeck.plugin.teams-react-wow",
+            "Icon": "imgs/actions/teams-react-wow/react-wow",
+            "Tooltip": "Reacts with a wow. Teams only.",
+            "PropertyInspectorPath": "ui/property-inspector-single-action.html",
+            "Controllers": [
+                "Keypad"
+            ],
+            "DisableAutomaticStates": true,
+            "VisibleInActionsList": false,
+            "States": [
+                {
+                    "Image": "imgs/actions/teams-react-wow/react-wow"
+                },
+                {
+                    "Image": "imgs/actions/teams-react-wow/react-wow-disabled"
+                }
+            ]
+        }
+    ],
+    "SDKVersion": 2,
+    "Software": {
+        "MinimumVersion": "6.5"
+    },
+    "OS": [
+        {
+            "Platform": "mac",
+            "MinimumVersion": "12"
+        },
+        {
+            "Platform": "windows",
+            "MinimumVersion": "10"
+        }
+    ],
+    "Nodejs": {
+        "Version": "20"
+    }
+}

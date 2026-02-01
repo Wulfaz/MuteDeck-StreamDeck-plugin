@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+	<head lang="en">
+		<title>MuteDeck Preset Action</title>
+		<meta charset="utf-8" />
+		<script src="js/sdpi-components.js"></script>
+		<script src="js/functions.js"></script>
+		<link rel="stylesheet" href="css/mutedeck.css" />
+	</head>
+
+	<body>
+		<sdpi-item label="Label">
+			<sdpi-checkbox setting="show_label" label="Show label with status on button" default="true"></sdpi-checkbox>
+		</sdpi-item>
+
+		<sdpi-item>
+			<div class="divider-container">
+				<hr class="divider" />
+				<span class="divider-text">Preset Info</span>
+				<hr class="divider" />
+			</div>
+
+			<p class="mutedeck info-text">
+				This is a preset action that uses <strong>Other Actions</strong> in MuteDeck.
+			</p>
+
+			<p class="mutedeck" style="margin-top: 8px;">
+				<span style="color: #9e9e9e;">Action name:</span>
+				<code id="action_name" style="background: #3a3a3a; padding: 2px 6px; border-radius: 3px; margin-left: 4px;">—</code>
+			</p>
+
+			<p class="mutedeck info-text" style="margin-top: 12px; font-size: 11px; color: #9e9e9e;">
+				If this action doesn't work, check that an action with this name exists in the
+				<strong>Other Actions</strong> list in the MuteDeck app settings.
+			</p>
+		</sdpi-item>
+
+		<sdpi-item>
+			<div class="divider-container">
+				<hr class="divider" />
+				<span class="divider-text">Connection</span>
+				<hr class="divider" />
+			</div>
+
+			<p class="mutedeck" id="mutedeck_connection_status" style="color: #ffffff"></p>
+		</sdpi-item>
+
+		<script>
+			// Listen for preset action info from the plugin
+			SDPIComponents.streamDeckClient.sendToPropertyInspector.subscribe((data) => {
+				if (data?.payload?.event === "presetActionInfo") {
+					const actionName = data.payload.actionName;
+					if (actionName) {
+						document.getElementById("action_name").textContent = actionName;
+					}
+				}
+			});
+
+			// Request preset action info from the plugin
+			SDPIComponents.streamDeckClient.send("sendToPlugin", { event: "getPresetActionInfo" });
+		</script>
+	</body>
+</html>

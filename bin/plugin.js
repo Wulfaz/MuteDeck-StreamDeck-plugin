@@ -9049,6 +9049,7 @@ class StatusUpdateHandler {
     actions.forEach((action) => {
       if (action.isKey()) {
         switch (action.manifestId) {
+          case "com.mutedeck.plugin.push-to-talk":
           case "com.mutedeck.plugin.togglemute":
             if (message.mute) {
               ActionUpdater.prototype.updateMuteStatus(action, message.mute);
@@ -9943,6 +9944,75 @@ let Togglevideo = (() => {
   return _classThis;
 })();
 
+/**
+ * Push-to-Talk in the conf call mute, or system mute
+ */
+let PushToTalk = (() => {
+  let _classDecorators = [action({ UUID: "com.mutedeck.plugin.push-to-talk" })];
+  let _classDescriptor;
+  let _classExtraInitializers = [];
+  let _classThis;
+  let _classSuper = SingletonAction;
+
+  let isProcessing = false;
+
+  (class extends _classSuper {
+    static { _classThis = this; }
+    static {
+      const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(_classSuper[Symbol.metadata] ?? null) : void 0;
+      __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
+      _classThis = _classDescriptor.value;
+      if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+      __runInitializers(_classThis, _classExtraInitializers);
+    }
+    /**
+     * The {@link SingletonAction.onWillAppear} event is useful for setting the visual representation of an action when it becomes visible. This could be due to the Stream Deck first
+     * starting up, or the user navigating between pages / folders etc.. There is also an inverse of this event in the form of {@link streamDeck.client.onWillDisappear}. In this example,
+     * we're setting up the initial state of the action.
+     */
+    onWillAppear(ev) {
+      if (ev.action.isKey()) {
+        ActionUpdater.prototype.updateMuteStatus(ev.action, "inactive");
+      }
+    }
+    /**
+     * Listens for the {@link SingletonAction.onKeyDown} event which is emitted by Stream Deck when an action is pressed. Stream Deck provides various events for tracking interaction
+     * with devices including key down/up, dial rotations, and device connectivity, etc. When triggered, {@link ev} object contains information about the event including any payloads
+     * and action information where applicable.
+     */
+    async onKeyDown(ev) {
+      const { settings } = ev.payload;
+
+      isProcessing = true;
+
+      streamDeck.logger.info("Unmute (PTT) action triggered", settings);
+      MuteDeckConnection.instance().toggleMute("off");
+
+      // Small delay to ensure command is sent
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      isProcessing = false;
+    }
+    /**
+     * Listens for the {@link SingletonAction.onKeyUp} event which is emitted by Stream Deck when an action is pressed. Stream Deck provides various events for tracking interaction
+     * with devices including key down/up, dial rotations, and device connectivity, etc. When triggered, {@link ev} object contains information about the event including any payloads
+     * and action information where applicable.
+     */
+    async onKeyUp(ev) {
+      const { settings } = ev.payload;
+
+      // Wait if previous operation is still processing
+      if (isProcessing) {
+        streamDeck.logger.info("Waiting for previous operation to complete...");
+        await new Promise(resolve => setTimeout(resolve, 800));
+      }
+
+      streamDeck.logger.info("Mute (PTT) action triggered", settings);
+      MuteDeckConnection.instance().toggleMute("on");
+    }
+  });
+  return _classThis;
+})();
+
 // We can enable "trace" logging so that all messages between the Stream Deck, and the plugin are recorded.
 // TODO: disable this in production builds.
 //streamDeck.logger.setLevel(LogLevel.TRACE);
@@ -9955,6 +10025,7 @@ streamDeck.actions.registerAction(new Togglevideo());
 streamDeck.actions.registerAction(new Togglesharing());
 streamDeck.actions.registerAction(new Togglerecording());
 streamDeck.actions.registerAction(new BringToFront());
+streamDeck.actions.registerAction(new PushToTalk());
 // Teams only actions
 streamDeck.actions.registerAction(new Backgroundblur());
 streamDeck.actions.registerAction(new TeamsRaisehand());

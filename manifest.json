@@ -11,6 +11,27 @@
     "PropertyInspectorPath": "ui/property-inspector.html",
     "Actions": [
         {
+            "Name": "Push-to-Talk",
+            "UUID": "com.mutedeck.plugin.push-to-talk",
+            "Icon": "imgs/actions/togglemute/unmuted",
+            "Tooltip": "Push-to-talk the conf call to unmute, or system unmute",
+            "PropertyInspectorPath": "ui/property-inspector-single-action.html",
+            "Controllers": [
+                "Keypad"
+            ],
+            "DisableAutomaticStates": true,
+            "States": [
+                {
+                    "Image": "imgs/actions/togglemute/unmuted",
+                    "Name": "Unmuted"
+                },
+                {
+                    "Image": "imgs/actions/togglemute/muted",
+                    "Name": "Muted"
+                }
+            ]
+        },
+        {
             "Name": "Mute",
             "UUID": "com.mutedeck.plugin.togglemute",
             "Icon": "imgs/actions/togglemute/unmuted",

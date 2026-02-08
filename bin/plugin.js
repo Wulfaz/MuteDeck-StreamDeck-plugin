@@ -9426,7 +9426,7 @@ let CustomAction = (() => {
 })();
 
 /**
- * Leaves the meeting you&#39;re in
+ * Leaves the meeting you're in
  */
 let Leavemeeting = (() => {
   let _classDecorators = [action({ UUID: "com.mutedeck.plugin.leavemeeting" })];
@@ -9533,7 +9533,7 @@ let TeamsRaisehand = (() => {
      */
     onWillAppear(ev) {
       if (ev.action.isKey()) {
-        ActionUpdater.prototype.teamsUpdateBackgroundBlurStatus(ev.action, "inactive");
+        ActionUpdater.prototype.teamsUpdateRaiseHandStatus(ev.action, "inactive");
       }
     }
     /**
@@ -9575,7 +9575,7 @@ let TeamsReactApplause = (() => {
      */
     onWillAppear(ev) {
       if (ev.action.isKey()) {
-        ActionUpdater.prototype.teamsUpdateBackgroundBlurStatus(ev.action, "inactive");
+        ActionUpdater.prototype.teamsUpdateReactApplauseStatus(ev.action, "inactive");
       }
     }
     /**
@@ -9617,7 +9617,7 @@ let TeamsReactLaugh = (() => {
      */
     onWillAppear(ev) {
       if (ev.action.isKey()) {
-        ActionUpdater.prototype.teamsUpdateBackgroundBlurStatus(ev.action, "inactive");
+        ActionUpdater.prototype.teamsUpdateReactLaughStatus(ev.action, "inactive");
       }
     }
     /**
@@ -9659,7 +9659,7 @@ let TeamsReactLike = (() => {
      */
     onWillAppear(ev) {
       if (ev.action.isKey()) {
-        ActionUpdater.prototype.teamsUpdateBackgroundBlurStatus(ev.action, "inactive");
+        ActionUpdater.prototype.teamsUpdateReactLikeStatus(ev.action, "inactive");
       }
     }
     /**
@@ -9701,7 +9701,7 @@ let TeamsReactLove = (() => {
      */
     onWillAppear(ev) {
       if (ev.action.isKey()) {
-        ActionUpdater.prototype.teamsUpdateBackgroundBlurStatus(ev.action, "inactive");
+        ActionUpdater.prototype.teamsUpdateReactLoveStatus(ev.action, "inactive");
       }
     }
     /**
@@ -9743,7 +9743,7 @@ let TeamsReactWow = (() => {
      */
     onWillAppear(ev) {
       if (ev.action.isKey()) {
-        ActionUpdater.prototype.teamsUpdateBackgroundBlurStatus(ev.action, "inactive");
+        ActionUpdater.prototype.teamsUpdateReactWowStatus(ev.action, "inactive");
       }
     }
     /**
